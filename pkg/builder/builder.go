@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/panagiotisptr/codeforces-parser/parser"
+	"github.com/panagiotisptr/codeforces-parser/pkg/parser"
 )
 
 func BuildTestCases(problemLink string, rootDir string) []error {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/panagiotisptr/codeforces-parser/builder"
+	"github.com/panagiotisptr/codeforces-parser/pkg/builder"
 )
 
 func main() {
