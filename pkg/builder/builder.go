@@ -1,12 +1,14 @@
 package builder
 
 import (
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/panagiotisptr/codeforces-companion/pkg/parser"
+	"github.com/panagiotisptr/codeforces-companion/templates"
 )
 
 func BuildTestCases(problemLink string, rootDir string) []error {
@@ -28,6 +30,15 @@ func BuildTestCases(problemLink string, rootDir string) []error {
 	return nil
 }
 
+func addCppBoilerplate(filename string) error {
+	err := ioutil.WriteFile(filename, []byte(templates.CppTemplate), 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func parseProblem(problemLink string, competitionName string) []error {
 	var errors []error
 	linkPaths := strings.Split(problemLink, "/")
@@ -44,6 +55,11 @@ func parseProblem(problemLink string, competitionName string) []error {
 
 	if len(testCaseErrors) > 0 {
 		errors = append(errors, testCaseErrors...)
+	}
+
+	err = addCppBoilerplate(problemFolder + "/solution.cpp")
+	if err != nil {
+		errors = append(errors, err)
 	}
 
 	return errors
