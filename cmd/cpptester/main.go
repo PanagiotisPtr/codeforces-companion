@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/panagiotisptr/codeforces-parser/pkg/tester"
+	"github.com/panagiotisptr/codeforces-companion/pkg/tester"
 )
 
 func main() {

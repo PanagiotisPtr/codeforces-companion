@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/panagiotisptr/codeforces-parser/pkg/tester"
+	"github.com/panagiotisptr/codeforces-companion/pkg/tester"
 )
 
 func readMultilineString(query string) (string, error) {
