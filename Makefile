@@ -1,4 +1,4 @@
 build:
-	go build -o bin/cpptester ./cmd/cpptester
-	go build -o bin/cfparser ./cmd/cfparser
-	go build -o bin/mktest ./cmd/mktest
+	go build -o bin/cfc-cpptester ./cmd/cpptester
+	go build -o bin/cfc-parser ./cmd/cfparser
+	go build -o bin/cfc-mktest ./cmd/mktest
