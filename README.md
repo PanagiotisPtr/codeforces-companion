@@ -1,4 +1,4 @@
-# Codeforces Competition Parser
+# Codeforces Companion
 
 This is a tool that allows you to get the testcases, problems (as pdfs) and initial setup for your language of choice for a codeforces competition. More features will be added soon like support for different languages, better testing, concurrent downloads etc. This project is still in development
 
