@@ -4,6 +4,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/panagiotisptr/codeforces-companion/pkg/parser"
 )
@@ -27,6 +28,27 @@ func BuildTestCases(problemLink string, rootDir string) []error {
 	return nil
 }
 
+func parseProblem(problemLink string, competitionName string) []error {
+	var errors []error
+	linkPaths := strings.Split(problemLink, "/")
+	problemName := linkPaths[len(linkPaths)-1]
+	problemFolder := competitionName + "/" + problemName + "/"
+
+	err := os.MkdirAll(problemFolder, os.ModePerm)
+	if err != nil {
+		err = parser.GetProblemPdf(problemLink, problemFolder)
+	}
+
+	testCaseErrors := BuildTestCases(problemLink, problemFolder)
+	err = parser.GetProblemPdf(problemLink, problemFolder)
+
+	if len(testCaseErrors) > 0 {
+		errors = append(errors, testCaseErrors...)
+	}
+
+	return errors
+}
+
 func BuildCompetition(competitionUrl string) []error {
 	var errors []error
 
@@ -45,26 +67,16 @@ func BuildCompetition(competitionUrl string) []error {
 		return errors
 	}
 
+	var wg sync.WaitGroup
 	for _, problemLink := range problemLinks {
-		linkPaths := strings.Split(problemLink, "/")
-		problemName := linkPaths[len(linkPaths)-1]
-		problemFolder := competitionName + "/" + problemName + "/"
-
-		err := os.MkdirAll(problemFolder, os.ModePerm)
-		if err != nil {
-			err = parser.GetProblemPdf(problemLink, problemFolder)
-		}
-
-		testCaseErrors := BuildTestCases(problemLink, problemFolder)
-		err = parser.GetProblemPdf(problemLink, problemFolder)
-
-		if len(testCaseErrors) > 0 {
-			errors = append(errors, testCaseErrors...)
-		}
-		if err != nil {
-			err = parser.GetProblemPdf(problemLink, problemFolder)
-		}
+		wg.Add(1)
+		go func(pl string, cn string) {
+			defer wg.Done()
+			parseProblem(pl, cn)
+		}(problemLink, competitionName)
 	}
+
+	wg.Wait()
 
 	return errors
 }
