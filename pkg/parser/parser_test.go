@@ -4,6 +4,8 @@ import (
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/panagiotisptr/codeforces-companion/pkg/testcase"
 )
 
 func standardizeSpaces(s string) string {
@@ -45,16 +47,16 @@ func TestGetTestCases(t *testing.T) {
 		t.Errorf("GetTestCases(): Returned errors %v", errors)
 	}
 
-	want := []TestCase{
-		TestCase{
+	want := []testcase.Testcase{
+		testcase.Testcase{
 			Inputs:  `3 4 0 3 1 0 2 3 0`,
 			Outputs: `2`,
 		},
-		TestCase{
+		testcase.Testcase{
 			Inputs:  `1 1 0 1`,
 			Outputs: `0`,
 		},
-		TestCase{
+		testcase.Testcase{
 			Inputs:  `19 16 16 16 16 16 15 15 0 5 0 4 9 9 1 4 4 0 8 16 12 6 12 19 15 8 6 19 19 14 6 9 16 10 11 15 4`,
 			Outputs: `797922655`,
 		},

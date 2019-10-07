@@ -6,12 +6,9 @@ import (
 
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"github.com/gocolly/colly"
-)
 
-type TestCase struct {
-	Inputs  string
-	Outputs string
-}
+	"github.com/panagiotisptr/codeforces-companion/pkg/testcase"
+)
 
 func GetProblemLinks(competitionUrl string) ([]string, []error) {
 	problemLinks := make(map[string]struct{})
@@ -44,10 +41,10 @@ func GetProblemLinks(competitionUrl string) ([]string, []error) {
 	return links, errors
 }
 
-func GetTestCases(problemUrl string) ([]TestCase, []error) {
+func GetTestCases(problemUrl string) ([]testcase.Testcase, []error) {
 	var testInputs []string
 	var testOutputs []string
-	var testCases []TestCase
+	var testCases []testcase.Testcase
 	var errors []error
 
 	c := colly.NewCollector(
@@ -69,7 +66,7 @@ func GetTestCases(problemUrl string) ([]TestCase, []error) {
 			errors = append(errors, err)
 		} else {
 			for i := 0; i < len(testInputs); i++ {
-				testCases = append(testCases, TestCase{
+				testCases = append(testCases, testcase.Testcase{
 					Inputs:  testInputs[i],
 					Outputs: testOutputs[i],
 				})

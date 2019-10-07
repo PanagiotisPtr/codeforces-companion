@@ -17,22 +17,11 @@ func BuildTestCases(problemLink string, rootDir string) []error {
 
 	for testCaseNum, testCase := range testCases {
 		testCaseName := rootDir + "testcase_" + strconv.Itoa(testCaseNum+1)
-		fin, err := os.Create(testCaseName + ".in")
+		testCase.Name = testCaseName
+		err := testCase.SaveTestcase()
 		if err != nil {
 			errors = append(errors, err)
-		} else {
-			fin.WriteString(testCase.Inputs)
 		}
-
-		fout, err := os.Create(testCaseName + ".out")
-		if err != nil {
-			errors = append(errors, err)
-		} else {
-			fout.WriteString(testCase.Outputs)
-		}
-
-		fin.Close()
-		fout.Close()
 	}
 
 	return nil
