@@ -2,9 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      image: circleci/go:1.13
+      - image: panagiotisptr/golang-wkhtmltopdf:1.13
     steps:
       - checkout
-      - run: cd pkg/parser
-      - run: go test
+      - run: go test ./pkg/parser
     
